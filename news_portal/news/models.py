@@ -1,9 +1,10 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 article = 'AR'
 news = 'NE'
 post_type = [(article, 'статья'),
-             (news, 'новость')]from django.contrib.auth.models import User
+             (news, 'новость')]
 
 
 class Author(models.Model):
@@ -45,6 +46,9 @@ class Post(models.Model):
             return f"{self.text[:preview_length]}..."
         else:
             return self.text
+
+    def __str__(self):
+        return self.title
 
 class PostCategory(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
