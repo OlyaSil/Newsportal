@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from .models import *
 
 class PostsList(ListView):
@@ -7,7 +7,9 @@ class PostsList(ListView):
     ordering = '-timedate'
     template_name = 'flatpages/default.html'
     context_object_name = 'posts'
+    queryset = Post.objects.all()
 
-
-
-# Create your views here.
+class PostDetail(DetailView):
+    model = Post
+    template_name = 'post.html'
+    context_object_name = 'post'

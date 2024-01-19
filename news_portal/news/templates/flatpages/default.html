@@ -1,3 +1,4 @@
+{% load custom_filters %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,18 +6,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>News List</title>
+    <title>{% block title %}Default Title{% endblock %}</title>
+    {% load static %}
     <link href="{% static 'css/simple.css' %}" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            color: #212529;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #007bff;
+        }
+
+        .news-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+        }
+
+        h2 {
+            color: #343a40;
+        }
+
+        p {
+            color: #6c757d;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>News List</h1>
-        {% for post in posts %}
-            <div>
-                <h2>{{ post.title }}</h2>
-                <p>{{ post.content }}</p>
-            </div>
-        {% endfor %}
+        <h1>Последние новости</h1>
+        {% block content %}
+            {% for post in posts %}
+                <div class="news-item">
+                    <h2>{{ post.title|censor }}</h2>
+                    <p>{{ post.timedate }}</p>
+                    <p>{{ post.text|slice:":20" }}{% if post.text|length > 20 %}...{% endif %}</p>
+                </div>
+            {% endfor %}
+        {% endblock %}
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

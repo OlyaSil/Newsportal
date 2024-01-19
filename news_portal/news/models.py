@@ -20,17 +20,25 @@ class Author(models.Model):
         self.rating = rating_posts + rating_users_comments + rating_authors_comments
         self.save()
 
+    def __str__(self):
+        return self.user.username
+
+
 class Category(models.Model):
     name = models.CharField(max_length=255, unique=True)
 
+    def __str__(self):
+        return self.name
+
 class Post(models.Model):
+    objects = None
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     type = models.CharField(max_length=2, choices=post_type)
     timedate = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=255)
     text = models.TextField()
     rating = models.IntegerField(default=0)
-    categories = models.ManyToManyField(Category, through='PostCategory')
+    ccategories = models.ManyToManyField(Category)
 
     def like(self):
         self.rating += 1
