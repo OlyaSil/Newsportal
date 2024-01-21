@@ -10,4 +10,12 @@
     <p>{{ post.text }}</p>
     <p>{{ post.timedate|date:"d.m.Y" }}</p>
 
+{# Информация о предыдущих страницах #}
+   {% if page_obj.has_previous %}
+       <a href="?page=1">1</a>
+       {% if page_obj.previous_page_number != 1 %}
+           ...
+           <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+       {% endif %}
+   {% endif %}
 {% endblock content %}

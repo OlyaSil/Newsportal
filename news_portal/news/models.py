@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 article = 'AR'
 news = 'NE'
@@ -38,7 +39,7 @@ class Post(models.Model):
     title = models.CharField(max_length=255)
     text = models.TextField()
     rating = models.IntegerField(default=0)
-    ccategories = models.ManyToManyField(Category)
+    categories = models.ManyToManyField(Category)
 
     def like(self):
         self.rating += 1
@@ -58,6 +59,9 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return reverse('post-detail', args=[str(self.pk)])
+
 class PostCategory(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
@@ -76,3 +80,4 @@ class Comment(models.Model):
     def dislike(self):
         self.rating -= 1
         self.save()
+
