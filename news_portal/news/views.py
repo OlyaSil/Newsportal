@@ -4,6 +4,9 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from .models import *
 from .filters import PostFilter
 from .forms import *
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
+
 
 class PostsList(ListView):
     model = Post
@@ -22,17 +25,19 @@ class PostsList(ListView):
         context['filterset'] = self.filterset
         return context
 
-class PostDetail(DetailView):
+class PostDetail(LoginRequiredMixin, DetailView):
     model = Post
     template_name = 'post.html'
     context_object_name = 'post'
 
-class PostCreate(CreateView):
+class PostCreate(PermissionRequiredMixin, CreateView):
+    raise_exception = True
     form_class = PostForm
     model = Post
     template_name = 'article_edit.html'
 
-class ArticleCreate(CreateView):
+class ArticleCreate(PermissionRequiredMixin, CreateView):
+    raise_exception = True
     model = Post
     form_class = ArticleForm
     template_name = 'article_edit.html'
@@ -41,18 +46,21 @@ class ArticleCreate(CreateView):
         form.instance.type = 'AR'
         return super().form_valid(form)
 
-class ArticleUpdate(UpdateView):
+class ArticleUpdate(PermissionRequiredMixin, UpdateView):
+    raise_exception = True
     model = Post
     form_class = ArticleForm
     template_name = 'article_edit.html'
     success_url = reverse_lazy('post-list')
 
-class ArticleDelete(DeleteView):
+class ArticleDelete(PermissionRequiredMixin, DeleteView):
+    raise_exception = True
     model = Post
     template_name = 'article_delete.html'
     success_url = reverse_lazy('post-list')
 
-class NewsCreate(CreateView):
+class NewsCreate(PermissionRequiredMixin, CreateView):
+    raise_exception = True
     model = Post
     form_class = NewsForm
     template_name = 'news_edit.html'
@@ -62,13 +70,16 @@ class NewsCreate(CreateView):
         form.instance.type = 'NE'
         return super().form_valid(form)
 
-class NewsUpdate(UpdateView):
+class NewsUpdate(PermissionRequiredMixin, UpdateView):
+    raise_exception = True
     model = Post
     form_class = NewsForm
     template_name = 'news_edit.html'
     success_url = reverse_lazy('post-list')
 
-class NewsDelete(DeleteView):
+class NewsDelete(PermissionRequiredMixin, DeleteView):
+    raise_exception = True
     model = Post
     template_name = 'news_delete.html'
     success_url = reverse_lazy('post-list')
+
