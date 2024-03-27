@@ -13,7 +13,7 @@ app.autodiscover_tasks()
 
 app.conf.beat_schedule = {
     'send-weekly-newsletter': {
-        'task': 'C:\Users\olsil\PycharmProjects\NewsPortal\news_portal\news\tasks.py',
+        'task': r'C:\Users\olsil\PycharmProjects\NewsPortal\news_portal\news\tasks.py',
         'schedule': crontab(hour=8, minute=0, day_of_week=1),
     },
 }
