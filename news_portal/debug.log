@@ -1,0 +1,6 @@
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 3557
+"GET /static/css/simple.css HTTP/1.1" 200 43
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4012
+C:\Users\olsil\PycharmProjects\NewsPortal\news_portal\news_portal\settings.py changed, reloading.
